@@ -1,2 +1,4 @@
+^renv$
+^renv\.lock$
 ^GLP\.Rproj$
 ^\.Rproj\.user$
