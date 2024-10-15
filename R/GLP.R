@@ -24,7 +24,7 @@
 #' gene.info <- calculate_gpr(counts)
 #' result <- glp(gene.info, 3, 1000)
 #'
-glp <- suppressWarnings(function(df, npc = 3, nfeatures = 1000) {
+glp <- suppressWarnings({function(df, npc = 3, nfeatures = 1000) {
   result <- list()
   # 过滤 pcount >= 3 的数据
   result[["Genes.summary"]] <- df
@@ -63,4 +63,4 @@ glp <- suppressWarnings(function(df, npc = 3, nfeatures = 1000) {
   result[["HVG"]] <- hvg
   result[["Genes.regression"]] <- df
   return(result)
-})
+}})
