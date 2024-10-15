@@ -1,12 +1,21 @@
 Package: GLP
-Title: What the Package Does (One Line, Title Case)
+Title: Redefining High Variable Genes Using LOESS Regression with Positive Ratio
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Yue", "Xie", email = "xieyue@genomics.cn", role = c("aut", "cre"))
+Maintainer: Yue Xie <xieyue@genomics.cn>
+Description: GLP is a specialized tool for feature selection that utilizes a robust 
+             LOESS (locally estimated scatterplot smoothing) regression model based 
+             on the relationship between gene average expression and positive ratio.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
+Imports: 
+    data.table,
+    Seurat,
+    stats
+Suggests: 
+    renv,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
