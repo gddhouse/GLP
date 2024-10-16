@@ -45,9 +45,31 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="glp">GLP<a class="anchor" aria-label="anchor" href="#glp"></a>
+<div class="page-header"><h1 id="glp-redefining-the-high-variable-genes-by-loess-regression-with-positive-ratio">GLP: Redefining the high variable genes by LOESS regression with positive ratio<a class="anchor" aria-label="anchor" href="#glp-redefining-the-high-variable-genes-by-loess-regression-with-positive-ratio"></a>
 </h1></div>
-<p>A feature selection method for scRNA-seq data</p>
+<p>GLP is an R package designed for efficient feature selection in single-cell RNA sequencing (scRNA-seq) analyses. It identifies highly variable genes (HVGs) by analyzing the relationship between the positive ratio and average expression level. The package uses optimized LOESS regression with automatic bandwidth selection based on the Bayesian Information Criterion (BIC) and applies Tukey’s biweight method to reduce the impact of outliers. GLP offers improved accuracy in gene selection, helping to preserve essential biological information for downstream analyses.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the development version of GLP from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span><span class="fu">install_github</span><span class="op">(</span><span class="st">"gddhouse/GLP"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">GLP</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<p>This is a basic example which shows you how to solve a common problem:</p>
+<p>First，we need to read in data: <code>{r example} library(Seurat) library(ggplot2) data &lt;- readRDS("./tests/PBMC.rds")</code></p>
+<p>Then, the second step is to calculate expression informations of each gene. Here we offer you <code>calculate_gpr</code>:</p>
+<p><code>{r cars} counts &lt;- data@assays$RNA@counts gene.info &lt;- calculate_gpr(counts) head(gene.info)</code> | exp.mean | positive_rate | pcount | gene | |———:|—————|——-:|———-| | 0| 0| 0|MIR1302-10| | 0| 0| 0| FAM138A| | 0| 0| 0| OR4F5|</p>
+<p>The genes with zero expression level will be removed in next step.</p>
+<p>The second step is the core step, we will perform robust LOESS regression to identify potential highly variable genes：</p>
+<p><code>{r pressure, echo = FALSE} hvg &lt;- glp(df) reg &lt;- hvg$Genes.regression ggplot(reg, aes(x=positive_rate, y=exp.mean, color=hvg)) + geom_point() +     geom_line(data=reg, aes(x=positive_rate, y=fit), color="green",size=1.5)+      coord_cartesian(xlim = c(0, 0.5),ylim=c(0,7))+     theme(axis.title.x = element_text(size=20),          axis.text.x = element_text(size=15, angle = 0, hjust = 0.9),          axis.title.y = element_text(size=20),             axis.text.y = element_text(size=15),           legend.position = "top",           panel.grid = element_blank(),           panel.background = element_rect(fill="white", color="black"))</code> <picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/gddhouse/GLP/blob/main/tests/regression.png"><source media="(prefers-color-scheme: light)" srcset="https://github.com/gddhouse/GLP/blob/main/tests/regression.png"><img alt="YOUR-ALT-TEXT" src="https://github.com/gddhouse/GLP/blob/main/tests/regression.png" width="420" height="400"></source></source></picture></p>
+<p>The potential HVGs selected by GLP are stored in hvg$HVG.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
