@@ -1,6 +1,6 @@
 #' Cluster based on input HVG
 #'
-#' @param data an seurat object
+#' @param counts an single cell expression matrix
 #' @param gene_list input HVG
 #' @param res Value of the resolution parameter(default is 0.8), bigger value obtain a larger number of clusters
 #'
@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-Cluster=function(data, gene_list,res=0.8){
+Cluster=function(counts, gene_list,res=0.8){
   SeuObj = CreateSeuratObject(counts=data)
   SeuObj <- NormalizeData(SeuObj,verbose = FALSE)
   all.gene = rownames(SeuObj)
