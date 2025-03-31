@@ -43,7 +43,7 @@ The genes with zero expression level will be removed in next step.
 The second step is the core step, we will perform robust LOESS regression to identify potential highly variable genes：
 
 ```{r pressure, echo = FALSE}
-hvg <- glp(df)
+hvg <- glp(gene.info)
 reg <- hvg$Genes.regression
 ggplot(reg, aes(x=positive_rate, y=exp.mean, color=hvg)) + geom_point() +
     geom_line(data=reg, aes(x=positive_rate, y=fit), color="green",size=1.5)+ 
